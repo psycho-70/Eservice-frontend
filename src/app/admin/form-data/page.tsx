@@ -87,6 +87,8 @@ export default function FormDataPage(): React.ReactElement {
   const [sortField, setSortField] = React.useState<string>('createdAt');
   const [sortDirection, setSortDirection] = React.useState<'asc' | 'desc'>('desc');
   const [showAllData, setShowAllData] = React.useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = React.useState(false);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 console.log(currentForm,"currentForm");
   function openModal(): void {
     setIsModalOpen(true);
@@ -188,17 +190,31 @@ console.log(currentForm,"currentForm");
   };
 
   // Delete selected forms
-  const handleDeleteSelected = async (): Promise<void> => {
+  const handleDeleteSelected = (): void => {
     if (selectedForms.length === 0) {
       alert('Please select forms to delete');
       return;
     }
 
-    if (!confirm(`Are you sure you want to delete ${selectedForms.length} form(s)?`)) {
+    setIsDeleteConfirmOpen(true);
+  };
+
+  const closeDeleteConfirm = (): void => {
+    if (isDeleting) {
+      return;
+    }
+    setIsDeleteConfirmOpen(false);
+  };
+
+  const confirmDeleteSelected = async (): Promise<void> => {
+    if (selectedForms.length === 0) {
+      setIsDeleteConfirmOpen(false);
       return;
     }
 
     try {
+      setIsDeleting(true);
+
       const deletePromises = selectedForms.map(id =>
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/qr-forms/${id}`, {
           method: 'DELETE',
@@ -211,6 +227,9 @@ console.log(currentForm,"currentForm");
     } catch (error) {
       console.error('Error deleting forms:', error);
       alert('Failed to delete forms');
+    } finally {
+      setIsDeleting(false);
+      setIsDeleteConfirmOpen(false);
     }
   };
 
@@ -997,6 +1016,47 @@ console.log(currentForm,"currentForm");
               <div className="px-4 py-3 flex w-full items-center gap-2">
                 <button onClick={handleSave} className="px-3 py-2 cursor-pointer rounded bg-blue-600 text-white">حفظ النموذج</button>
                 <button onClick={closeModal} className="px-3 py-2 cursor-pointer rounded bg-gray-200">إغلاق</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isDeleteConfirmOpen && (
+        <div className="fixed inset-0 z-50">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => {
+              if (!isDeleting) {
+                closeDeleteConfirm();
+              }
+            }}
+          />
+          <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+              <div className="px-5 py-4 border-b border-gray-200">
+                <h2 className="text-lg font-semibold text-gray-900">تأكيد الحذف</h2>
+                <p className="mt-2 text-sm text-gray-600">
+                  Are you sure you want to delete {selectedForms.length} selected form{selectedForms.length === 1 ? '' : 's'}? This action cannot be undone.
+                </p>
+              </div>
+              <div className="px-5 py-4 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={closeDeleteConfirm}
+                  disabled={isDeleting}
+                  className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition disabled:opacity-60"
+                >
+                  إلغاء
+                </button>
+                <button
+                  type="button"
+                  onClick={confirmDeleteSelected}
+                  disabled={isDeleting}
+                  className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition disabled:opacity-60"
+                >
+                  {isDeleting ? 'جارٍ الحذف...' : 'تأكيد الحذف'}
+                </button>
               </div>
             </div>
           </div>

@@ -79,7 +79,7 @@ export default function SignInPage(): React.ReactElement {
     try {
       setIsSubmitting(true);
       
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL }/users/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -90,6 +90,9 @@ export default function SignInPage(): React.ReactElement {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 400 || response.status === 401) {
+          throw new Error('Please enter correct email and password.');
+        }
         throw new Error(data.message || 'Sign in failed');
       }
 
@@ -136,7 +139,7 @@ console.log('Change password state:', changePasswordState);
     try {
       setIsChangingPassword(true);
       
-      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL }/users/change-password`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/users/change-password`;
       console.log('Making request to:', apiUrl);
       
       const response = await fetch(apiUrl, {
@@ -198,9 +201,10 @@ console.log('Change password state:', changePasswordState);
   };
 
   return (
-    <div className="min-h-screen text-black bg-white flex items-center justify-center p-4">
-      <div className="w-full max-w-md border rounded-lg p-6">
-        <h1 className="text-2xl font-semibold mb-6">Sign in</h1>
+    <div className="min-h-screen text-black bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center p-6">
+      <div className="w-full max-w-md border border-slate-200 bg-white/80 backdrop-blur-xl shadow-xl rounded-2xl p-8">
+        <h1 className="text-2xl font-semibold mb-2 text-center">Sign in</h1>
+        <p className="text-sm text-gray-600 mb-6 text-center">Welcome back! Please enter your details to continue.</p>
 
         {errorMessage ? (
           <div role="alert" className="mb-4 p-3 text-sm text-red-600 bg-red-50 rounded border border-red-200">
@@ -225,7 +229,7 @@ console.log('Change password state:', changePasswordState);
               type="email"
               autoComplete="email"
               required
-              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-slate-200 rounded-lg px-3 py-2 bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="you@example.com"
               value={formState.email}
               onChange={(e) => updateField('email', e.target.value)}
@@ -243,7 +247,7 @@ console.log('Change password state:', changePasswordState);
                 type={showPassword ? "text" : "password"}
                 autoComplete="current-password"
                 required
-                className="w-full border rounded px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border border-slate-200 rounded-lg px-3 py-2 pr-10 bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Your password"
                 value={formState.password}
                 onChange={(e) => updateField('password', e.target.value)}
@@ -270,7 +274,7 @@ console.log('Change password state:', changePasswordState);
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded bg-black cursor-pointer text-white py-2 disabled:opacity-60 hover:bg-gray-800 transition-colors mb-4"
+            className="w-full rounded-lg bg-blue-600 cursor-pointer text-white py-2.5 font-semibold disabled:opacity-60 hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 transition-colors mb-4"
           >
             {isSubmitting ? 'Signing in…' : 'Sign in'}
           </button>
@@ -279,7 +283,7 @@ console.log('Change password state:', changePasswordState);
             <button
               type="button"
               onClick={() => setShowChangePassword(true)}
-              className="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors"
+              className="text-blue-700 hover:text-blue-900 text-sm font-medium transition-colors"
             >
               Change Password
             </button>
@@ -289,8 +293,8 @@ console.log('Change password state:', changePasswordState);
 
       {/* Change Password Modal */}
       {showChangePassword && (
-        <div className="fixed inset-0 bg-white bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white border rounded-lg w-full max-w-md p-6">
+        <div className="fixed inset-0 bg-slate-900/20 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-md p-6 shadow-lg">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Change Password</h2>
               <button
@@ -318,7 +322,7 @@ console.log('Change password state:', changePasswordState);
                     id="change-email"
                     type="email"
                     required
-                    className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full border border-slate-200 rounded-lg px-3 py-2 bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="you@example.com"
                     value={changePasswordState.email}
                     onChange={(e) => updateChangePasswordField('email', e.target.value)}
@@ -334,7 +338,7 @@ console.log('Change password state:', changePasswordState);
                       id="old-password"
                       type={showOldPassword ? "text" : "password"}
                       required
-                      className="w-full border rounded px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full border border-slate-200 rounded-lg px-3 py-2 pr-10 bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter your old password"
                       value={changePasswordState.oldPassword}
                       onChange={(e) => updateChangePasswordField('oldPassword', e.target.value)}
@@ -367,7 +371,7 @@ console.log('Change password state:', changePasswordState);
                       id="new-password"
                       type={showNewPassword ? "text" : "password"}
                       required
-                      className="w-full border rounded px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full border border-slate-200 rounded-lg px-3 py-2 pr-10 bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Enter new password"
                       value={changePasswordState.newPassword}
                       onChange={(e) => updateChangePasswordField('newPassword', e.target.value)}
@@ -403,7 +407,7 @@ console.log('Change password state:', changePasswordState);
                       id="confirm-password"
                       type={showConfirmPassword ? "text" : "password"}
                       required
-                      className="w-full border rounded px-3 py-2 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full border border-slate-200 rounded-lg px-3 py-2 pr-10 bg-white/90 focus:outline-none focus:ring-2 focus:ring-blue-500"
                       placeholder="Confirm new password"
                       value={changePasswordState.confirmPassword}
                       onChange={(e) => updateChangePasswordField('confirmPassword', e.target.value)}
@@ -430,8 +434,7 @@ console.log('Change password state:', changePasswordState);
                 <button
                   type="submit"
                   disabled={isChangingPassword}
-                           className="w-full rounded bg-black cursor-pointer text-white py-2 disabled:opacity-60 hover:bg-gray-800 transition-colors mb-4"
-
+                  className="w-full rounded-lg bg-blue-600 cursor-pointer text-white py-2.5 font-semibold disabled:opacity-60 hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 transition-colors"
                 >
                   {isChangingPassword ? 'Changing Password...' : 'Change Password'}
                 </button>
