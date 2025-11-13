@@ -274,7 +274,7 @@ console.log('Change password state:', changePasswordState);
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-blue-600 cursor-pointer text-white py-2.5 font-semibold disabled:opacity-60 hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 transition-colors mb-4"
+            className="w-full rounded-lg bg-blue-600 cursor-pointer text-white py-2.5 font-semibold disabled:opacity-60 hover:bg-blue-700 focus-visible:outline-offset-2 focus-visible:outline-blue-500 transition-colors mb-4"
           >
             {isSubmitting ? 'Signing in…' : 'Sign in'}
           </button>
@@ -434,7 +434,7 @@ console.log('Change password state:', changePasswordState);
                 <button
                   type="submit"
                   disabled={isChangingPassword}
-                  className="w-full rounded-lg bg-blue-600 cursor-pointer text-white py-2.5 font-semibold disabled:opacity-60 hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 transition-colors"
+                  className="w-full rounded-lg bg-blue-600 cursor-pointer text-white py-2.5 font-semibold disabled:opacity-60 hover:bg-blue-700  focus-visible:outline-offset-2 focus-visible:outline-blue-500 transition-colors"
                 >
                   {isChangingPassword ? 'Changing Password...' : 'Change Password'}
                 </button>

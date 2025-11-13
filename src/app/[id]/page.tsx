@@ -102,7 +102,7 @@ export default function DocumentDetailsPage() {
     return (
       <div className="min-h-screen bg-gray-100" dir="rtl">
         <Navbar />
-        <main className="max-w-7xl min-h-[600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="max-w-5xl min-h-[600px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-white rounded-lg shadow-lg p-8 text-center">
             <div className="text-red-600 text-6xl mb-4">⚠️</div>
             <h3 className="text-xl font-bold text-red-600 mb-2">خطأ</h3>
@@ -129,77 +129,94 @@ export default function DocumentDetailsPage() {
         </div>
       )}
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-lg shadow-lg ">
-           <div className="flex items-center justify-between border-b p-8 border-gray-200 pb-4 mb-6">
-          {/* Arabic Text - Right aligned */}
-          <h1 className="text-2xl md:text-3xl font-semibold text-gray-800" dir="rtl">
-            التحقق من الوثائق
-          </h1>
-          {/* Button - Left aligned */}
-          <button className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white px-6 py-2.5 rounded-md font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
-            العودة
-          </button>
-          
-        </div>
-          <p className="text-black text-2xl border-b border-gray-200 p-8 font-medium">
-            خدمة تتيح التحقق من الوثائق التي تم إصدارها إلكترونيا عبر بوابة خدمات المشتركين،
-            وللتحقق من شهادة الاشتراك الرجاء إدخال الرقم المرجعي الخاص بالوثيقة.
-          </p>
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="flex items-center justify-between border-b p-8 border-gray-200 pb-4 mb-6">
+            {/* Arabic Text - Right aligned */}
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 p-8 gap-8 mb-8 mt-6">
-            <div className="p-2 space-y-4">
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">إسم الغرفة:</span>
-                <span className="font-normal text-xl text-gray-800">{form.roomName || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">الرقم الموحد (700):</span>
-                <span className="font-normal text-xl text-gray-800">{form.facility700}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">رقم الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.requestNumber || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">مقدم الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.applicantName || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">مبلغ الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.requestAmount || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">رقم السجل التجاري:</span>
-                <span className="font-normal text-xl text-gray-800">{form.recordNumber || 'غير محدد'}</span>
-              </div>
+            <div className="flex relative">
+              <div className='bg-blue-500 p-[2px] h-10 absolute -right-8'></div>
+              <h1 className="text-2xl md:text-3xl font-semibold text-gray-800" dir="rtl">
+                التحقق من الوثائق
+              </h1>
             </div>
+            {/* Button - Left aligned */}
+            <button className="bg-blue-500 cursor-pointer hover:bg-blue-600 text-white px-6 py-2.5 rounded-md font-medium transition-colors duration-200 shadow-sm hover:shadow-md">
+              العودة
+            </button>
 
-            <div className="p-2 space-y-4">
-              <div className="flex mb-14 gap-2">
-                <span className="text-black font-bold text-xl">إسم المنشأة:</span>
-                <span className="font-normal text-xl text-gray-800">{form.facilityName || 'غير محدد'}</span>
+          </div>
+          
+          {/* Scrollable content area with fixed height - Scrollbar visible only on desktop */}
+          <div className="max-h-[500px] md:overflow-hidden overflow-y-auto 
+              [&::-webkit-scrollbar]:w-2
+              [&::-webkit-scrollbar-track]:bg-gray-100
+              [&::-webkit-scrollbar-thumb]:bg-gray-300
+              [&::-webkit-scrollbar-thumb]:rounded-full
+              
+              hover:[&::-webkit-scrollbar-thumb]:bg-gray-400
+              lg:[&::-webkit-scrollbar-thumb]:bg-gray-300
+              lg:[&::-webkit-scrollbar]:block
+              [&::-webkit-scrollbar]:hidden">
+            <p className="text-black text-2xl border-b border-gray-200 p-8 font-medium">
+              خدمة تتيح التحقق من الوثائق التي تم إصدارها إلكترونيا عبر بوابة خدمات المشتركين،
+              وللتحقق من شهادة الاشتراك الرجاء إدخال الرقم المرجعي الخاص بالوثيقة.
+            </p>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 p-8 gap-8 mb-8 mt-6">
+              <div className="p-2 space-y-4">
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">إسم الغرفة:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.roomName || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">الرقم الموحد </span><span className='text-black text-xl font-bold'>(700):</span>
+                  <span className="font-normal text-xl text-gray-800">{form.facility700}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">رقم الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.requestNumber || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">مقدم الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.applicantName || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">مبلغ الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.requestAmount || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">رقم السجل التجاري:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.recordNumber || 'غير محدد'}</span>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">نوع الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.requestType || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">تاريخ ووقت إنشاء الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.creationDate || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">تاريخ صلاحية الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.expiryDate || 'غير محدد'}</span>
-              </div>
-              <div className="flex gap-2">
-                <span className="text-black font-bold text-xl">حالة الطلب:</span>
-                <span className="font-normal text-xl text-gray-800">{form.requestStatus || 'غير محدد'}</span>
+
+              <div className="p-2 space-y-4">
+                <div className="flex mb-14 gap-2">
+                  <span className="text-black font-extrabold text-xl">إسم المنشأة:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.facilityName || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">نوع الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.requestType || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">تاريخ ووقت إنشاء الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.creationDate || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">تاريخ صلاحية الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.expiryDate || 'غير محدد'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <span className="text-black font-extrabold text-xl">حالة الطلب:</span>
+                  <span className="font-normal text-xl text-gray-800">{form.requestStatus || 'غير محدد'}</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="flex justify-center space-x-4 rtl:space-x-reverse">
+          <div className="flex justify-center space-x-4 rtl:space-x-reverse p-8 border-t border-gray-200">
             {form.pdfFile && (
               <button
                 onClick={handleDownloadPDF}
