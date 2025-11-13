@@ -6,32 +6,7 @@ import Navbar from '../verify/components/Navbar';
 import Footer from '../verify/components/Footer';
 import { FourSquare } from 'react-loading-indicators';
 
-type QRForm = {
-  _id: string;
-  referenceNumber: string;
-  passportNumber: string;
-  facility700: string;
-  roomName?: string;
-  facilityName?: string;
-  requestNumber?: string;
-  requestType?: string;
-  applicantName?: string;
-  creationDate?: string;
-  requestAmount?: string;
-  expiryDate?: string;
-  recordNumber?: string;
-  requestStatus?: string;
-  qrCodeUrl?: string;
-  createdAt: string;
-  isInitialFormComplete: boolean;
-  isVerificationComplete: boolean;
-  pdfFile?: {
-    filename: string;
-    originalName: string;
-    path: string;
-    size: number;
-  };
-};
+
 
 export default function DocumentDetailsPage() {
   const params = useParams();
